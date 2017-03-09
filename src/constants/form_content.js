@@ -98,9 +98,7 @@ export const FORM = {
     id: 8,
     formName: 'Zipcode',
     label: 'Zipcode',
-    fields: {
-      zipcode: { type: 'input', label: 'Zipcode' }
-    },
+    fields: ZIP_FIELDS,
     type: 'form',
     submitText: 'Continue'
   },
@@ -108,10 +106,16 @@ export const FORM = {
     id: 9,
     formName: 'Email',
     label: 'Email Address',
-    fields: {
-      email: { type: 'input', label: 'Email Address' }
-    },
+    fields: EMAIL_FIELDS,
     type: 'form',
     submitText: 'See Your Recommendation'
   }
 };
+
+export const ZIP_FIELDS = {
+  zipcode: { type: 'input', label: 'Zipcode' }
+}
+
+export const EMAIL_FIELDS = {
+  email: { type: 'input', label: 'Email Address' }
+}

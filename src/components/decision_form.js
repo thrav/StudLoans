@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Results from './results';
 import MultipleChoice from './multiple_choice';
-import FormFill from './form_fill';
+import FormContainer from '../forms/form_container';
 import { FORM } from '../constants/form_content';
 import { lastStep } from '../actions/index';
 import _ from 'lodash';
@@ -17,7 +17,7 @@ class DecisionForm extends Component {
     return (
       <div>
         <progress className="progress" style={style}></progress>
-        <div>{step > 7 ? <FormFill /> : <MultipleChoice /> }</div>
+        <div>{step > 7 ? <FormContainer step={step} /> : <MultipleChoice /> }</div>
         {step !== 0 && <button className='btn btn-danger' onClick={this.onBack.bind(this, step)}>Back</button>}
       </div>
     );
