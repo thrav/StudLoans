@@ -3,6 +3,7 @@ import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { storeResponse, nextStep } from '../actions/index';
 import { ZIP_FIELDS } from '../constants/form_content';
+import { STATE_ZIPS } from '../constants/state_zips';
 
 class ZipcodeForm extends Component {
 
@@ -41,9 +42,9 @@ function validate(values) {
   const errors = {};
 
   _.each(ZIP_FIELDS, (type, field) => {
-    const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(values[field]);
+    const zipState = _.findKey(STATE_ZIPS, (st) => _.indexOf(st, values[field]) !== -1);
 
-    if(!values[field] || !isValidZip) {
+    if(!zipState) {
       errors[field] = `Please enter a valid ${field}`
     }
   });

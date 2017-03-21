@@ -1,19 +1,41 @@
 import { STORE_RESPONSE } from '../actions/index';
+import { LENDER_DATA } from '../constants/results_data';
+import { STATE_ZIPS } from '../constants/state_zips';
+import _ from 'lodash';
 
 const INITIAL_STATE = {
-  employment:   null,
-  income:       null,
-  loanBalance:  null,
-  loanType:     null,
-  interestRate: null,
-  creditScore:  null,
-  education:    null,
-  age:          null,
-  zipcode:      null,
-  email:        null
+  employment:       null,
+  income:           null,
+  loanBalance:      null,
+  loanType:         null,
+  interestRate:     null,
+  creditScore:      null,
+  education:        null,
+  age:              null,
+  zipcode:          null,
+  zipState:         null,
+  email:            null,
+  term:             10,
+  availableLenders: []
 }
 
-export default function(state = INITIAL_STATE, action) {
+const TESTING_STATE = {
+  employment:       'emp_nonprofit',
+  income:           1,      //ai_2550
+  loanBalance:      5,      //lb_o80
+  loanType:         'lt_fed',
+  interestRate:     4,      //ir_o7
+  creditScore:      0,      //cs_u650
+  education:        'edu_babs',
+  age:              2,      //age_2835
+  zipcode:          '00000',
+  zipState:         '',
+  email:            'thravm@gmail.com',
+  term:             10,
+  availableLenders: []
+}
+
+export default function(state = TESTING_STATE, action) {
   switch(action.type) {
     case STORE_RESPONSE:
       switch(action.payload.step) {
@@ -34,10 +56,51 @@ export default function(state = INITIAL_STATE, action) {
         case 7:
           return { ...state, age: action.payload.option }
         case 8:
-          return { ...state, zipcode: action.payload.option }
+          const zipState = findZipState(action.payload.option);
+          const availableLenders = determineAvailableLenders(
+            zipState, state.loanBalance, state.income, state.creditScore);
+          return { ...state, zipcode: action.payload.option, zipState: zipState, availableLenders: availableLenders }
         case 9:
           return { ...state, email: action.payload.option }
       }
   }
   return state;
+}
+
+const findZipState = (zipcode) => {
+  return _.findKey(STATE_ZIPS, (st) => _.indexOf(st, zipcode) !== -1);
+}
+
+const determineAvailableLenders = (zipState, loanBalance, income, creditScore) => {
+  const allLenders = _.keys(LENDER_DATA);
+  var declinedLenders = [];
+
+  if (!zipState) {
+    return { empty: 'empty' };
+  }
+  if (_.indexOf(['AL','DE','KY','MS','NV','RI','SD'], zipState) !== -1 || income === 'ai_u25') {
+    declinedLenders.push('earnest');
+  }
+  if (_.indexOf(['DC','DE','ID','LA','MS','NV','RI','SD','VT'], zipState) !== -1
+        || loanBalance === 'lb_u5' || loanBalance === 'lb_510'
+        || income === 'ai_u25' || income === 'ai_2550') {
+    declinedLenders.push('common_bond');
+  }
+  if (_.indexOf(['ME','NV','WV'], zipState) !== -1
+        || creditScore === 'cs_u650' || creditScore === 'cs_650680') {
+    declinedLenders.push('lendkey');
+  }
+  if (zipState === 'NV' || loanBalance === 'lb_u5' || loanBalance === 'lb_510') {
+    declinedLenders.push('sofi');
+  }
+  if (creditScore === 'cs_u650' || creditScore === 'cs_650680'
+        || income === 'ai_u25' || income === 'ai_2550' || income === 'ai_5075') {
+    declinedLenders.push('college_ave');
+  }
+
+  const availableLenders = allLenders.filter((lender) => {
+    return declinedLenders.indexOf(lender) === -1;
+  });
+
+  return _.indexBy(availableLenders, (x) => x);
 }

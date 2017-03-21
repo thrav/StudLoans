@@ -6,18 +6,22 @@ import _ from 'lodash';
 
 class MultipleChoice extends Component {
 
-  onSelect(optionValue) {
-    this.props.storeResponse(optionValue, this.props.step);
-    this.props.nextStep(this.props.step);
+  onSelect(optionValue, optionId, step) {
+    if(!!this.optionId)
+      this.props.storeResponse(optionId, step);
+    else
+      this.props.storeResponse(optionValue, step);
+    this.props.nextStep(step);
   }
 
   render() {
-    const options = _.find(FORM, {id: this.props.step}).options;
+    const { step } = this.props;
+    const options = _.find(FORM, {id: step}).options;
 
     const items = options.map((option) => {
       return (
         <li className="list-group-item" key={option.value}>
-          <button className="btn btn-primary" onClick={this.onSelect.bind(this, option.value)}>{option.label}</button>
+          <button className="btn btn-primary" onClick={this.onSelect.bind(this, option.value, option.id, step)}>{option.label}</button>
         </li>
       );
     });

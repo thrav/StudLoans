@@ -1,19 +1,29 @@
+// call with assumed values and allow the user to fill in additional details
+
+// fields: income, family size, interest rate, state of residence,
+// annual growth rate, predates_2014?, attended grad school, public servent
+// balance, decision
+
+// we should be working out what the state is based on the zip code earlier
+// also pull income, interest rate, balanace, attended grad school, public servent
+
+// calc deduction based on family size
+// calc cost of each payment
+// calc total interest paid
+// calc payments
+
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { storeResponse, nextStep } from '../actions/index';
-import { EMAIL_FIELDS } from '../constants/form_content';
+import { FORGIVENESS_FIELDS } from '../constants/form_content';
 
-class EmailForm extends Component {
+class ForgivenessCalc extends Component {
 
-  componentWillMount() {
-    if(!!this.props.hasEmail)
-      this.props.nextStep(this.props.step);
-  }
-
-  onSubmit() {
-    this.props.storeResponse(passed.email, this.props.step);
-    this.props.nextStep(this.props.step);
+  onSubmit(passed) {
+    console.log("submitted");
+    //this.props.storeResponse(passed.email, this.props.step);
+    //this.props.nextStep(this.props.step);
   }
 
   renderField(fieldConfig, field) {
@@ -58,13 +68,12 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-    step: state.step.step,
-    hasEmail: state.responses.email
+    responeses: state.responses
   }
 }
 
 export default reduxForm({
-  form: 'EmailForm',
-  fields: _.keys(EMAIL_FIELDS),
+  form: 'ForgivenessCalc',
+  fields: _.keys(FORGIVENESS_FIELDS),
   validate
-}, mapStateToProps, { storeResponse, nextStep })(EmailForm);
+}, mapStateToProps, { storeResponse, nextStep })(ForgivenessCalc);

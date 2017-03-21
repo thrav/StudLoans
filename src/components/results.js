@@ -2,33 +2,77 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { toZipStep } from '../actions/index';
+
+import Refinance from '../results/refinance';
+import RefinanceOrForgive from '../results/refinance_or_forgive';
+import ImproveCredit from '../results/improve_credit';
+import KeepLoanLowInterest from '../results/keep_loan_low_interest';
+import KeepLoanLowBalance from '../results/keep_loan_low_balance';
+import Student from '../results/student';
+import IncomeDrivenRepayment from '../results/income_driven_repayment';
+import Forgiveness from '../results/forgiveness';
+
 class Results extends Component {
 
-  renderData(data) {
-    console.log(data);
-    return (
-      <ul>
-      <li>{data.employment}</li>
-      <li>{data.income}</li>
-      <li>{data.loanBalance}</li>
-      <li>{data.loanType}</li>
-      <li>{data.interestRate}</li>
-      <li>{data.creditScore}</li>
-      <li>{data.education}</li>
-      <li>{data.age}</li>
-      <li>{data.zipcode}</li>
-      <li>{data.email}</li>
-      </ul>
-    );
+  renderOutcome(data) {
+    if
+      (data.income > 25
+      && data.loanBalance > 5
+      && data.creditScore > 650
+      && data.employment === 'emp_forprofit'
+      && data.interestRate > 3
+      && data.education !== 'edu_some'
+      && !(data.income < 50 && creditScore < 680))
+      { <Refinance data={data} toZipStep={this.props.toZipStep()} /> }
+    else if
+      (data.income > 100
+      && (data.employment === 'emp_nonprofit' || data.employment === 'emp_govt')
+      && data.loanBalance > 5
+      && data.creditScore > 680
+      && data.interestRate > 3)
+      { <RefinanceOrForgive data={data} toZipStep={this.props.toZipStep()} /> }
+    else if
+      (data.employment === 'emp_nonprofit' || data.employment === 'emp_govt')
+      { <Forgiveness data={data} /> }
+    else if
+      (data.income <= 25000
+      || (data.loanBalance >= 75000 && data.income >= 25000)
+
+
+
+
+    if(data.interestRate === 'ir_u3') {
+      return ( <KeepLoanLowInterest data={data} /> );
+    } else if(data.loanBalance === 'lb_u5') {
+      return ( <KeepLoanLowBalance data={data} /> );
+    } else if(data.employment === 'emp_student') {
+      return ( <Student /> );
+    } else if(data.creditScore === 'cs_u650' ||
+              (data.creditScore === 'cs_650680' &&
+              (data.income === 'ai_u25' || data.income === 'ai_2550'))) {
+      return ( <ImproveCredit data={data} /> );
+    } else if((data.employment === 'emp_forprofit' && data.education !== 'edu_some') ||
+              ((data.employment === 'emp_govt' || data.employment === 'emp_nonprofit') &&
+                data.income === 'ai_o100')) {
+      return (  );
+    } else if((data.employment === 'emp_govt' || data.employment === 'emp_nonprofit') &&
+              data.income !== 'ai_o100') {
+      return (  );
+    } else if((data.income === 'ai_u25' ||
+              (data.loanBalance === 'lb_o80' && data.income !== 'ai_u25')) &&
+              data.loanType === 'lt_fed') {
+      return ( <IncomeDrivenRepayment data={data} /> );
+    } else {
+      return ( <div>nada</div> );
+    }
   }
 
   render() {
     return (
       <div>
         <h3>Results</h3>
-
-          {this.renderData(this.props.responses)}
-
+          {this.renderOutcome(this.props.responses)}
       </div>
     );
   }
@@ -40,4 +84,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Results);
+export default connect(mapStateToProps, { toZipStep })(Results);

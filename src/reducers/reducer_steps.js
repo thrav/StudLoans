@@ -4,7 +4,11 @@ const INITIAL_STATE = {
   step: 0
 };
 
-export default function(state = INITIAL_STATE, action) {
+const TESTING_STATE = {
+  step: 8
+};
+
+export default function(state = TESTING_STATE, action) {
   switch(action.type) {
     case NEXT_STEP:
       return { ...state, step: action.payload.step + 1 }
