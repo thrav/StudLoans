@@ -123,7 +123,7 @@ export const EMAIL_FIELDS = {
 export const FORGIVENESS_FIELDS = {
   income:               { type: 'input',    label: 'Annual Income'          },
   annualGrowthRate:     { type: 'input',    label: 'Annual Growth Rate (%)' },
-  balance:              { type: 'input',    label: 'Loan Balance'           },
+  loanBalance:          { type: 'input',    label: 'Loan Balance'           },
   interestRate:         { type: 'input',    label: 'Interest Rate (%)'      },
   predates2014:         { type: 'checkbox', label: 'Pre-2014 Loan?'         },
   familySize:           { type: 'input',    label: 'Family Size'            },
@@ -134,13 +134,13 @@ export const FORGIVENESS_FIELDS = {
 }
 
 export const PAYMENT_FIELDS = {
-  balance:              { type: 'input',    label: 'Loan Balance'           },
+  loanBalance:              { type: 'input',    label: 'Loan Balance'           },
   interestRate:         { type: 'input',    label: 'Interest Rate (%)'      },
-  term:                 { type: 'input',    label: 'Term Length (Months)'   }
+  terms:                 { type: 'input',    label: 'Term Length (Months)'   }
 }
 
 export const REFINANCE_FIELDS = {
-  reFiBalance:          { type: 'input',    label: 'Loan Balance'           },
+  reFiLoanBalance:          { type: 'input',    label: 'Loan Balance'           },
   reFiInterestRate:     { type: 'input',    label: 'Interest Rate (%)'      },
-  reFiTerm:             { type: 'input',    label: 'Term Length (Months)'   }
+  reFiTerms:             { type: 'input',    label: 'Term Length (Months)'   }
 }

@@ -24,48 +24,34 @@ class Results extends Component {
       && data.interestRate > 3
       && data.education !== 'edu_some'
       && !(data.income < 50 && creditScore < 680))
-      { <Refinance data={data} toZipStep={this.props.toZipStep()} /> }
+      { return <Refinance data={data} toZipStep={this.props.toZipStep()} /> }
     else if
       (data.income > 100
       && (data.employment === 'emp_nonprofit' || data.employment === 'emp_govt')
       && data.loanBalance > 5
       && data.creditScore > 680
       && data.interestRate > 3)
-      { <RefinanceOrForgive data={data} toZipStep={this.props.toZipStep()} /> }
+      { return <RefinanceOrForgive data={data} toZipStep={this.props.toZipStep()} /> }
     else if
       (data.employment === 'emp_nonprofit' || data.employment === 'emp_govt')
-      { <Forgiveness data={data} /> }
+      { return <Forgiveness data={data} /> }
     else if
       (data.income <= 25000
-      || (data.loanBalance >= 75000 && data.income >= 25000)
-
-
-
-
-    if(data.interestRate === 'ir_u3') {
-      return ( <KeepLoanLowInterest data={data} /> );
-    } else if(data.loanBalance === 'lb_u5') {
-      return ( <KeepLoanLowBalance data={data} /> );
-    } else if(data.employment === 'emp_student') {
-      return ( <Student /> );
-    } else if(data.creditScore === 'cs_u650' ||
-              (data.creditScore === 'cs_650680' &&
-              (data.income === 'ai_u25' || data.income === 'ai_2550'))) {
-      return ( <ImproveCredit data={data} /> );
-    } else if((data.employment === 'emp_forprofit' && data.education !== 'edu_some') ||
-              ((data.employment === 'emp_govt' || data.employment === 'emp_nonprofit') &&
-                data.income === 'ai_o100')) {
-      return (  );
-    } else if((data.employment === 'emp_govt' || data.employment === 'emp_nonprofit') &&
-              data.income !== 'ai_o100') {
-      return (  );
-    } else if((data.income === 'ai_u25' ||
-              (data.loanBalance === 'lb_o80' && data.income !== 'ai_u25')) &&
-              data.loanType === 'lt_fed') {
-      return ( <IncomeDrivenRepayment data={data} /> );
-    } else {
-      return ( <div>nada</div> );
-    }
+      || (data.loanBalance >= 75000 && data.income >= 25000))
+      { return <IncomeDrivenRepayment data={data} /> }
+    else if
+      (data.employment === 'emp_student')
+      { return <Student /> }
+    else if
+      (data.loanBalance < 5)
+      { return <KeepLoanLowBalance data={data} /> }
+    else if
+      (data.interestRate < 3)
+      { return <KeepLoanLowInterest data={data} /> }
+    else if
+      (data.creditScore < 680)
+      { return <ImproveCredit data={data} /> }
+    else { return ( <div>nada</div> ) }
   }
 
   render() {

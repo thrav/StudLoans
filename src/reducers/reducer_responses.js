@@ -21,15 +21,15 @@ const INITIAL_STATE = {
 
 const TESTING_STATE = {
   employment:       'emp_nonprofit',
-  income:           1,      //ai_2550
-  loanBalance:      5,      //lb_o80
+  income:           110,      //ai_2550
+  loanBalance:      90,      //lb_o80
   loanType:         'lt_fed',
-  interestRate:     4,      //ir_o7
-  creditScore:      0,      //cs_u650
+  interestRate:     8,      //ir_o7
+  creditScore:      780,      //cs_u650
   education:        'edu_babs',
-  age:              2,      //age_2835
-  zipcode:          '00000',
-  zipState:         '',
+  age:              30,      //age_2835
+  zipcode:          '78209',
+  zipState:         'TX',
   email:            'thravm@gmail.com',
   term:             10,
   availableLenders: []

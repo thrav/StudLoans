@@ -45,13 +45,13 @@ class EmailForm extends Component {
 function validate(values) {
   const errors = {};
 
-  // _.each(EMAIL_FIELDS, (type, field) => {
-  //   const isValidEmail = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|cc|co|edu|org|net|cat|coop|pro|travel|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/.test(values[field]);
-  //
-  //   if(!values[field] || !isValidEmail) {
-  //     errors[field] = `Please enter a valid ${field}`
-  //   }
-  // });
+  _.each(EMAIL_FIELDS, (type, field) => {
+    const isValidEmail = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|cc|co|edu|org|net|cat|coop|pro|travel|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b/.test(values[field]);
+
+    if(!values[field] || !isValidEmail) {
+      errors[field] = `Please enter a valid ${field}`
+    }
+  });
 
   return errors;
 }

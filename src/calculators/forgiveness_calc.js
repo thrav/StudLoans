@@ -20,10 +20,9 @@ import { FORGIVENESS_FIELDS } from '../constants/form_content';
 
 class ForgivenessCalc extends Component {
 
-  onSubmit(passed) {
-    console.log("submitted");
-    //this.props.storeResponse(passed.email, this.props.step);
-    //this.props.nextStep(this.props.step);
+  onChange(passed) {
+    console.log("changed");
+    //this.props.updateForgivenessCalc(passed);
   }
 
   renderField(fieldConfig, field) {
@@ -32,7 +31,7 @@ class ForgivenessCalc extends Component {
     return (
       <div key={field} className={`form-group ${fieldHelper.touched && fieldHelper.invalid ? 'has-danger' : ''}`}>
         <label>{fieldConfig.label}</label>
-        <fieldConfig.type type='text' className='form-control' {...fieldHelper} />
+        <fieldConfig.type type='text' className='form-control' onChange={fieldHelper.onChange.bind(this)} {...fieldHelper} />
         <div className='text-help'>
           {fieldHelper.touched ? fieldHelper.error : ''}
         </div>
@@ -41,15 +40,14 @@ class ForgivenessCalc extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
-
     return (
-      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        {_.map(EMAIL_FIELDS, this.renderField.bind(this))}
-        <button type="submit" className="btn btn-primary">Submit</button>
+      <form>
+        {_.map(FORGIVENESS_FIELDS, this.renderField.bind(this))}
       </form>
     );
   }
+
+
 }
 
 function validate(values) {
