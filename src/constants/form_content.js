@@ -15,11 +15,11 @@ export const FORM = {
     id: 1,
     label: 'Annual Income',
     options: [
-      {val: 20, value: 'ai_u25',   label:'< $25k',         estimate: 20000},
-      {val: 37, value: 'ai_2550',  label: '$25k - $50k',   estimate: 37500},
-      {val: 62, value: 'ai_5075',  label: '$50k - $75k',   estimate: 62500},
-      {val: 87, value: 'ai_75100', label: '$75k - $100k',  estimate: 87500},
-      {val: 110, value: 'ai_o100',  label: '$100k+',        estimate: 100000}
+      {val: 20000, value: 'ai_u25',   label:'< $25k',         estimate: 20000},
+      {val: 37500, value: 'ai_2550',  label: '$25k - $50k',   estimate: 37500},
+      {val: 62500, value: 'ai_5075',  label: '$50k - $75k',   estimate: 62500},
+      {val: 87500, value: 'ai_75100', label: '$75k - $100k',  estimate: 87500},
+      {val: 110000, value: 'ai_o100', label: '$100k+',        estimate: 100000}
     ],
     type: 'picker'
   },
@@ -27,12 +27,12 @@ export const FORM = {
     id: 2,
     label: 'Student Loan Balance',
     options: [
-      {val: 4, value: 'lb_u5',    label: '< $5k',         estimate: 2500},
-      {val: 8, value: 'lb_510',   label: '$5k - $10k',    estimate: 7500},
-      {val: 15, value: 'lb_1020',  label: '$10k - $20k',   estimate: 15000},
-      {val: 30, value: 'lb_2040',  label: '$20k - $40k',   estimate: 30000},
-      {val: 60, value: 'lb_4080',  label: '$40k - $80k',   estimate: 60000},
-      {val: 90, value: 'lb_o80',   label: '$80k+',         estimate: 90000}
+      {val: 4000, value: 'lb_u5',     label: '< $5k',         estimate: 2500},
+      {val: 8000, value: 'lb_510',    label: '$5k - $10k',    estimate: 7500},
+      {val: 15000, value: 'lb_1020',  label: '$10k - $20k',   estimate: 15000},
+      {val: 30000, value: 'lb_2040',  label: '$20k - $40k',   estimate: 30000},
+      {val: 60000, value: 'lb_4080',  label: '$40k - $80k',   estimate: 60000},
+      {val: 90000, value: 'lb_o80',   label: '$80k+',         estimate: 90000}
     ],
     type: 'picker'
   },
@@ -134,13 +134,13 @@ export const FORGIVENESS_FIELDS = {
 }
 
 export const PAYMENT_FIELDS = {
-  loanBalance:              { type: 'input',    label: 'Loan Balance'           },
+  loanBalance:          { type: 'input',    label: 'Loan Balance'           },
   interestRate:         { type: 'input',    label: 'Interest Rate (%)'      },
-  terms:                 { type: 'input',    label: 'Term Length (Months)'   }
+  terms:                { type: 'input',    label: 'Term Length (Months)'   }
 }
 
-export const REFINANCE_FIELDS = {
-  reFiLoanBalance:          { type: 'input',    label: 'Loan Balance'           },
-  reFiInterestRate:     { type: 'input',    label: 'Interest Rate (%)'      },
-  reFiTerms:             { type: 'input',    label: 'Term Length (Months)'   }
+export const ESTIMATE_FIELDS = {
+  loanBalance:          { type: 'input',    label: 'Loan Balance'           },
+  estInterestRate:      { type: 'input',    label: 'Interest Rate (%)'      },
+  estTerms:             { type: 'input',    label: 'Term Length (Months)'   }
 }

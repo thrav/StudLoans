@@ -17,16 +17,16 @@ class Results extends Component {
 
   renderOutcome(data) {
     if
-      (data.income > 25
-      && data.loanBalance > 5
+      (data.income > 25000
+      && data.loanBalance > 5000
       && data.creditScore > 650
       && data.employment === 'emp_forprofit'
       && data.interestRate > 3
       && data.education !== 'edu_some'
-      && !(data.income < 50 && creditScore < 680))
+      && !(data.income < 50000 && creditScore < 680))
       { return <Refinance data={data} toZipStep={this.props.toZipStep()} /> }
     else if
-      (data.income > 100
+      (data.income > 100000
       && (data.employment === 'emp_nonprofit' || data.employment === 'emp_govt')
       && data.loanBalance > 5
       && data.creditScore > 680
@@ -43,10 +43,10 @@ class Results extends Component {
       (data.employment === 'emp_student')
       { return <Student /> }
     else if
-      (data.loanBalance < 5)
+      (data.loanBalance < 5000)
       { return <KeepLoanLowBalance data={data} /> }
     else if
-      (data.interestRate < 3)
+      (data.interestRate < 3000)
       { return <KeepLoanLowInterest data={data} /> }
     else if
       (data.creditScore < 680)

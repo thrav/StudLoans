@@ -3,7 +3,6 @@ import { lastStep } from '../actions/index';
 import Lender from './lender.js';
 
 const LenderTable = ({ listOfLenders, toZipStep }) => {
-  console.log(listOfLenders);
   if(listOfLenders['empty']) {
     return (<div>
               <h3>We could not find your Zip Code</h3>

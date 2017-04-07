@@ -11,7 +11,7 @@ class EmailForm extends Component {
       this.props.nextStep(this.props.step);
   }
 
-  onSubmit() {
+  onSubmit(passed) {
     this.props.storeResponse(passed.email, this.props.step);
     this.props.nextStep(this.props.step);
   }

@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
+import { reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
-import { storeResponse, nextStep } from '../actions/index';
-import { FORGIVENESS_FIELDS } from '../constants/form_content';
+import { PAYMENT_FIELDS } from '../constants/form_content';
+import { amortization } from '../lib/math_tools';
+import { getResults } from '../selectors';
+import PaymentResults from './payment_results';
 
 class CurrentPaymentCalc extends Component {
 
   onSubmit(passed) {
-    console.log("submitted");
+    console.log(passed.loanBalance);
   }
 
   renderField(fieldConfig, field) {
@@ -25,13 +27,17 @@ class CurrentPaymentCalc extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, results } = this.props;
+    console.log(this.props.test);
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        {_.map(PAYMENT_FIELDS, this.renderField.bind(this))}
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
+      <div>
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+          {_.map(PAYMENT_FIELDS, this.renderField.bind(this))}
+          <button type="submit" className="btn btn-primary">Submit</button>
+        </form>
+        <PaymentResults results={this.props.results} />
+      </div>
     );
   }
 
@@ -46,14 +52,28 @@ function validate(values) {
   return errors;
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, props) {
   return {
-    responeses: state.responses
+    initialValues: state.responses,
+    form: state.form,
+    results: getResults(state, props)
   }
 }
 
-export default reduxForm({
+CurrentPaymentCalc = reduxForm({
   form: 'CurrentPaymentCalc',
   fields: _.keys(PAYMENT_FIELDS),
   validate
-}, mapStateToProps, { storeResponse, nextStep })(ForgivenessCalc);
+})(CurrentPaymentCalc);
+
+const selector = formValueSelector('CurrentPaymentCalc');
+CurrentPaymentCalc = connect(
+  state => {
+    const values = selector(state, 'loanBalance', 'interestRate', 'terms');
+    return {
+      test: values
+    }
+  }
+)(CurrentPaymentCalc);
+
+export default CurrentPaymentCalc;

@@ -8,6 +8,8 @@
 //to update the calculated values -- but can we do this without another dispatches
 //google cascading reducers -- should be possible like combine reducers
 
+import { UPDATE_PAYMENT_CALC, UPDATE_ESTIMATE_CALC } from '../actions/index';
+import { amortization } from '../lib/math_tools';
 import _ from 'lodash';
 
 const INITIAL_STATE = {
@@ -19,17 +21,15 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
     case UPDATE_PAYMENT_CALC:
-      const monthlyPayment = amortization(state.loanBalance, parseFloat(state.interestRate), state.terms / 12);
-      const totalPayment = monthlyPayment * state.terms;
-      const totalInterest = totalPayment - state.loanBalance;
+      const monthlyPayment = amortization(state.form.loanBalance, parseFloat(state.form.interestRate), state.form.terms / 12);
+      const totalPayment = monthlyPayment * state.form.terms;
+      const totalInterest = totalPayment - state.form.loanBalance;
       return { ...state, monthlyPayment: monthlyPayment, totalPayment: totalPayment, totalInterest: totalInterest }
-
-    case UPDATE_FORGIVENESS_CALC:
-      const deduction = 0;
-      const calculateIBR = 0;
-      const compoundInterest = 0;
-      const calculatePayments = 0;
-      const 
+    case UPDATE_ESTIMATE_CALC:
+      const estMonthlyPayment = amortization(state.form.loanBalance, parseFloat(state.form.estInterestRate), state.form.estTerms / 12);
+      const estTotalPayment = monthlyPayment * state.form.estTerms;
+      const estTotalInterest = totalPayment - state.form.loanBalance;
+      return { ...state, estMonthlyPayment: estMonthlyPayment, estTotalPayment: estTotalPayment, estTotalInterest: estTotalInterest }
   }
   return state;
 }

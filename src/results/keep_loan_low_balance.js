@@ -7,7 +7,6 @@ const KeepLoanLowBalance = ({ data }) =>
     <p>Keep up your monthly payment and the loans will be gone in no time!</p>
     <h5>Find <a href="https://www.studentloansguy.com/savings-earning/"> ways to earn more money</a>
           to pay off your loan even faster.</h5>
-
     <Disclosure />
   </div>
 
