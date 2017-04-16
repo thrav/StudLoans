@@ -20,13 +20,14 @@ const INITIAL_STATE = {
 }
 
 const TESTING_STATE = {
-  employment:       'emp_forprofit',
-  income:           110000,      //ai_2550
+  employment:       'emp_govt',
+  income:           50000,      //ai_2550
   loanBalance:      90000,      //lb_o80
   loanType:         'lt_fed',
   interestRate:     8,      //ir_o7
-  creditScore:      780,      //cs_u650
+  creditScore:      650,      //cs_u650
   education:        'edu_babs',
+  publicServant:    1,
   age:              30,      //age_2835
   zipcode:          '78209',
   zipState:         'TX',
@@ -40,7 +41,9 @@ export default function(state = TESTING_STATE, action) {
     case STORE_RESPONSE:
       switch(action.payload.step) {
         case 0:
-          return { ...state, employment: action.payload.option }
+          const publicServant = (action.payload.option === 'emp_govt'
+                              || action.payload.option === 'emp_nonprofit') ? 1 : 0;
+          return { ...state, employment: action.payload.option, publicServant: publicServant }
         case 1:
           return { ...state, income: action.payload.option }
         case 2:

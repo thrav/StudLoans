@@ -13,7 +13,7 @@ const Forgiveness = ({ data }) =>
       <li>Sign up for an <a href="https://studentloans.gov/myDirectLoan/ibrInstructions.action?source=15SPRRPMT">income-driven repayment plan</a>.</li>
       <li>Fill out the <a href="/">Public Service Forgiveness Form</a>.</li>
     </ol>
+    <ForgivenessCalc initalValues={data} outcome='forgiveness' />
   </div>
 
 export default Forgiveness;
-//<ForgivenessCalc data={data} />

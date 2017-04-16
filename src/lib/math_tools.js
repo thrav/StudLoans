@@ -27,4 +27,9 @@ function amortization(principal, rate, period, yearOrMonth, payAtBeginning) {
   }
 }
 
-export { amortization };
+function compoundInterest(rate, numOfCompoundings, principal, numOfPeriods) {
+  var ci = principal * Math.pow((1 + ((rate/100)/ numOfCompoundings)), numOfCompoundings * numOfPeriods);
+  return Math.round(ci * 100) / 100;
+}
+
+export { amortization, compoundInterest };
